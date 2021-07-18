@@ -14,9 +14,9 @@
     </div>
 
     <div class="nav-right">
-      <input type="text">
-      <font-awesome-icon class="fas fa-search" icon="search" />
-      <div>BAMBINI</div>
+      <input v-model="searchQuery" @keyup.enter="$emit('search', searchQuery)" size="35" type="text" placeholder="Click on the magnifying glass to search!">
+      <font-awesome-icon class="fas fa-search" icon="search" @click="$emit('search', searchQuery)"/>
+      <div class="category">BAMBINI</div>
       <div class="bell-container">
         <font-awesome-icon class="fas fa-bell" icon="bell" />
         <div class="notif">2</div>
@@ -32,6 +32,11 @@
 <script>
 export default {
   name: 'Header',
+  data() {
+    return {
+      searchQuery: '',
+    }
+  },
   props: {
     
   }
@@ -79,6 +84,10 @@ export default {
         margin-left: 20px;
       }
 
+      .category {
+        margin-left: 50px;
+      }
+
       input {
         outline: none;
         border: 1px solid #333;
@@ -88,6 +97,10 @@ export default {
 
       .fas {
         font-size: 22px;
+      }
+
+      .fa-search {
+        cursor: pointer;
       }
 
       .bell-container {

@@ -20,13 +20,21 @@ export default {
     movies: Array,
     index: Number,
   },
+  methods: {
+    getImage() {
+      let image = this.movies[this.index].poster_path
+      if (image === null) {
+        return 'https://png2.cleanpng.com/sh/9b45967c7b67474da3a608ce21c9512b/L0KzQYm3UcI5N5J6fZH0aYP2gLBuTfxwb5CyeuRqbnSwdrF1lL14bZN4geZuLYTsgMS0VfE3bJU8T6UEYUG6cYq1U8Y4PGo2Sqo6NUG6QYWBUME6PmQ2SpD5bne=/kisspng-logo-brand-font-website-tips-5a6dd7739a17a9.3674912815171480196312.png'
+      }
+      return `https://image.tmdb.org/t/p/w342${image}`
+    }
+  },
 
-   data() {
-        return {
-            image: 'https://image.tmdb.org/t/p/w342/hQq8xZe5uLjFzSBt4LanNP7SQjl.jpg'
-            
-       }
-   },
+  data() {
+    return {
+      image: this.getImage(),
+    }
+  },
 
 }
 </script>
@@ -42,6 +50,7 @@ export default {
         z-index: 1;
         text-align: center;
         background-size: cover;
+        background-position: center;
 
         .layer {
             position: absolute;
@@ -63,7 +72,7 @@ export default {
             font-size: 16px;
 
             h5 {
-                height: 50px;
+                height: 80px;
                 font-weight: bold;
             }
 
