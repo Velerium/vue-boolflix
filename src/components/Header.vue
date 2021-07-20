@@ -45,6 +45,8 @@ export default {
 
 <style scoped lang="scss">
 
+  @import '../style/colors';
+
   .nav {
     display: flex;
     justify-content: space-between;
@@ -72,6 +74,10 @@ export default {
           &:first-child {
             font-weight: bold;
           }
+
+          &:hover {
+            color: $options-hover;
+          }
         }
       }
     }
@@ -86,6 +92,11 @@ export default {
 
       .category {
         margin-left: 50px;
+
+        &:hover {
+          color: $options-hover;
+          cursor: pointer;
+        }
       }
 
       input {
@@ -97,9 +108,6 @@ export default {
 
       .fas {
         font-size: 22px;
-      }
-
-      .fa-search {
         cursor: pointer;
       }
 

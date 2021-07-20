@@ -2,7 +2,7 @@
   <div class="item col-6 col-md-4 col-xl-2" :style="{ backgroundImage: 'url(' + this.image + ')' }">
     <div class="layer"></div>
     <div class="series-info">
-      <h5>{{ movieOrSeries() }}</h5>
+      <h5>{{ this.movies[this.index].title }}</h5>
       <div class="subtitle"> Titolo Originale: </div>
       <div class="or-title">{{ movies[index].original_title }}</div>
       <div class="subtitle"> Lingua Originale: </div>      
@@ -10,11 +10,11 @@
       <div v-else class="or-lang"> {{movies[index].original_language}} </div>
       <div class="subtitle">Rating:</div>
       <div class="all-stars" >
-        <font-awesome-icon v-for="stars in stars" :key=stars class="far fa-star" :icon="['far', 'star']" />
+        <font-awesome-icon v-for="stars in 5" :key=stars class="far fa-star" :icon="['far', 'star']" />
         <div>{{ movies[index].vote_average }}</div>
         <div class="star-rating">
-        {{ getStars() }}
-        <font-awesome-icon v-for="(stars, index) in trueStars" :key=index class="fas fa-star" :icon="['fas', 'star']" />
+          {{ getStars() }}
+          <font-awesome-icon v-for="stars in trueStars" :key=stars class="fas fa-star" :icon="['fas', 'star']" />
         </div>
       </div>
     </div>
@@ -23,13 +23,12 @@
 
 <script>
 export default {
-  name: 'Card',
+  name: 'CardMovies',
   data() {
     return {
       image: this.getImage(),
       flagExists: true,
-      stars: [1, 2, 3, 4, 5],
-      trueStars: []
+      trueStars: 0
     }
   },
   props: {
@@ -68,8 +67,7 @@ export default {
     },
 
     getStars() {
-      let trueRating = Math.round(this.movies[this.index].vote_average/2);
-      this.trueStars = Array(trueRating).fill(0);
+      this.trueStars = Math.round(this.movies[this.index].vote_average/2);
     } 
   },
 
@@ -81,7 +79,6 @@ export default {
     .item {
         position: relative;
         height: 450px;
-        margin-bottom: 20px;
         padding: 20px;
         z-index: 1;
         text-align: center;
