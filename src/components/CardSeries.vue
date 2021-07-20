@@ -1,5 +1,5 @@
 <template>
-  <div class="item col-6 col-md-4 col-xl-2" :style="{ backgroundImage: 'url(' + this.image + ')' }">
+  <div class="item col-6 col-md-4 col-xl-2" :style="{ backgroundImage: `url( ${this.getImage()} )`}">
     <div class="layer"></div>
     <div class="series-info">
       <h5>{{ this.series[this.index].name }}</h5>
@@ -26,7 +26,6 @@ export default {
   name: 'CardSeries',
   data() {
     return {
-      image: this.getImage(),
       flagExists: true,
       trueStars: 0
     }
