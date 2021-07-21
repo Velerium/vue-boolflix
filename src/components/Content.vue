@@ -3,13 +3,30 @@
     <div v-if="movies.length !== 0">
       <h2>ORIGINALI NETFLIX - FILM</h2>
       <div class="series-list">
-        <CardMovies v-for="(item, index) in movies" :key="item.id" :movies="movies" :index="index"/>
+        <Card v-for="(item, index) in movies"
+            :key="item.id"
+            :movies="movies"
+            :index="index"
+            :showName="item.title"
+            :showTrueName="item.original_title"
+            :language="item.original_language"
+            :rating="item.vote_average"
+            :image="item.poster_path"/>
+
       </div>
     </div>
     <div v-if="series.length !== 0" >
       <h2 class="series-title">ORIGINALI NETFLIX - SERIE TV</h2>
       <div class="series-list">
-        <CardSeries v-for="(item, index) in series" :key="item.id" :series="series" :index="index"/>
+        <Card v-for="(item, index) in series"
+            :key="item.id"
+            :series="series"
+            :index="index"
+            :showName="item.name"
+            :showTrueName="item.original_name"
+            :language="item.original_language"
+            :rating="item.vote_average"
+            :image="item.poster_path"/>
       </div>
     </div>
     <div v-if="movies.length === 0 && series.length === 0" class="no-result">
@@ -21,13 +38,12 @@
 </template>
 
 <script>
-import CardMovies from './CardMovies.vue'
-import CardSeries from './CardSeries.vue'
+import Card from './Card.vue'
+
 export default {
   name: 'Content',
   components: {
-    CardMovies,
-    CardSeries
+    Card,
   },
   props: {
     movies: Array,
@@ -70,6 +86,20 @@ export default {
         p {
           margin-bottom: 40px;
         }
+      }
+
+      ::-webkit-scrollbar {
+        height: 7px;
+      }
+
+      ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px $main-bg; 
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: red; 
+        border-radius: 10px;
       }
 
     }

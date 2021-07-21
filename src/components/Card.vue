@@ -1,39 +1,56 @@
 <template>
-  <div class="item col-6 col-md-4 col-xl-2" :style="{ backgroundImage: 'url(' + this.image + ')' }">
+  <div class="item col-6 col-md-4 col-xl-2" :style="{ backgroundImage: `url( ${this.getImage()} )`}">
     <div class="layer"></div>
+
     <div class="series-info">
-      <h5>{{ this.movies[this.index].title }}</h5>
+      <h5>{{ showName }}</h5>
+
       <div class="subtitle"> Titolo Originale: </div>
-      <div class="or-title">{{ movies[index].original_title }}</div>
-      <div class="subtitle"> Lingua Originale: </div>      
-      <img v-if="this.flagExists === true" class="or-lang" :src="getFlagUrl(movies[index].original_language)">
-      <div v-else class="or-lang"> {{movies[index].original_language}} </div>
+      <div class="or-title">{{ showTrueName }}</div>
+
+      <div class="subtitle lang"> Lingua Originale:      
+        <img v-if="this.flagExists" class="or-lang" :src="getFlagUrl(language)">
+        <div v-else class="or-lang"> {{ language }} </div>
+      </div>
+
       <div class="subtitle">Rating:</div>
-      <div class="all-stars" >
-        <font-awesome-icon v-for="stars in 5" :key=stars class="far fa-star" :icon="['far', 'star']" />
-        <div>{{ movies[index].vote_average }}</div>
+      <div class="all-stars">
+
+        <div v-if="this.flagNoVotes">No votes yet...</div>
+        <font-awesome-icon v-else v-for="stars in 5" :key=stars class="far fa-star" :icon="['far', 'star']" />
+
+        <div v-if="!this.flagNoVotes">{{ rating }}</div>
         <div class="star-rating">
           {{ getStars() }}
           <font-awesome-icon v-for="stars in trueStars" :key=stars class="fas fa-star" :icon="['fas', 'star']" />
         </div>
       </div>
+
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'CardMovies',
+  name: 'Card',
   data() {
     return {
-      image: this.getImage(),
       flagExists: true,
-      trueStars: 0
+      flagNoVotes: false,
+      trueStars: 0,
+      missingImage: 'https://png2.cleanpng.com/sh/9b45967c7b67474da3a608ce21c9512b/L0KzQYm3UcI5N5J6fZH0aYP2gLBuTfxwb5CyeuRqbnSwdrF1lL14bZN4geZuLYTsgMS0VfE3bJU8T6UEYUG6cYq1U8Y4PGo2Sqo6NUG6QYWBUME6PmQ2SpD5bne=/kisspng-logo-brand-font-website-tips-5a6dd7739a17a9.3674912815171480196312.png',
+      
     }
   },
   props: {
     movies: Array,
+    series: Array,
     index: Number,
+    showName: String,
+    showTrueName: String,
+    language: String,
+    rating: Number,
+    image: String
   },
   methods: {
 
@@ -49,25 +66,22 @@ export default {
       }
     },
 
-    movieOrSeries() {
-      if (typeof this.movies[this.index].title === 'string') {
-        return this.movies[this.index].title;
-      }
-
-      return this.movies[this.index].name;
-
-    },
-
     getImage() {
-      let image = this.movies[this.index].poster_path
-      if (image === null) {
-        return 'https://png2.cleanpng.com/sh/9b45967c7b67474da3a608ce21c9512b/L0KzQYm3UcI5N5J6fZH0aYP2gLBuTfxwb5CyeuRqbnSwdrF1lL14bZN4geZuLYTsgMS0VfE3bJU8T6UEYUG6cYq1U8Y4PGo2Sqo6NUG6QYWBUME6PmQ2SpD5bne=/kisspng-logo-brand-font-website-tips-5a6dd7739a17a9.3674912815171480196312.png'
+      if (this.image === null) {
+        return this.missingImage;
       }
-      return `https://image.tmdb.org/t/p/w342${image}`
+      return `https://image.tmdb.org/t/p/w342${this.image}`;
     },
 
     getStars() {
-      this.trueStars = Math.round(this.movies[this.index].vote_average/2);
+      this.flagNoVotes = false;
+
+      if(Math.round(this.rating/2 === 0)) {
+        this.flagNoVotes = true;
+        return;
+      }
+      
+      this.trueStars = Math.round(this.rating/2);
     } 
   },
 
@@ -105,20 +119,25 @@ export default {
             font-size: 16px;
             align-items: center;
 
-            .subtitle {
-              font-size: 13px;
-              margin: 20px 0 5px 0;
-            }
-
             h5 {
                 height: 80px;
                 font-weight: bold;
             }
 
+            .subtitle {
+              font-size: 13px;
+              margin: 20px 0 5px 0;
+            }
+
+            .or-title, .lang {
+              height: 60px;
+            }
+
             .or-lang {
-              margin: 0 auto;
+              margin: 10px auto;
               width: 15%;
               border-radius: 5px;
+              display: block;
             }
 
             .all-stars {
