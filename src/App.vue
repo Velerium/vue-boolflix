@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Header @search="APICallQueryShows"/>
-    <Content :movies="movies" :series="series"/>
+    <Header @search="APICallQueryShows" @removeEntry="removeEntry" @filterByFav="filterByFav" :watchLater="watchLater"/>
+    <Content :movies="movies" :series="series" :watchLater="watchLater" @addEntry="addEntry" @removeEntry="removeEntry"/>
   </div>
 </template>
 
@@ -22,10 +22,12 @@ export default {
       series: [],
       popularMovies: [],
       popularSeries: [],
+      watchLater: [],
       type: '',
       URL: '',
       searchQuery: '',
       flagShows: false,
+      modalMessage: ''
     }
   },
   created() {
@@ -95,6 +97,23 @@ export default {
             })
     },
 
+    addEntry(showName) {
+      if(this.watchLater.includes(showName)) {
+        this.modalMessage = 'That show is already in your "Watch Later" list!'
+        return;
+      }
+      this.watchLater.push(showName);
+    },
+
+    removeEntry(showName) {
+      let value = this.watchLater.indexOf(showName);
+      this.watchLater.splice(value, 1);
+    },
+
+    filterByFav(item) {
+      this.searchQuery = item;
+      this.APICallQueryShows(this.searchQuery);
+    }
   }
 }
 </script>

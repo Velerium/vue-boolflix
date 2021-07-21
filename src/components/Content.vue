@@ -2,8 +2,10 @@
   <div class="main">
     <div v-if="movies.length !== 0">
       <h2>ORIGINALI NETFLIX - FILM</h2>
+      <span>(click on the heart to add the entry to your "Watch Later" list (bell icon)).</span>
       <div class="series-list">
-        <Card v-for="(item, index) in movies"
+        <Card @addEntry="addEntry" @removeEntry="removeEntry" v-for="(item, index) in movies"
+            :watchLater="watchLater"
             :key="item.id"
             :movies="movies"
             :index="index"
@@ -18,7 +20,8 @@
     <div v-if="series.length !== 0" >
       <h2 class="series-title">ORIGINALI NETFLIX - SERIE TV</h2>
       <div class="series-list">
-        <Card v-for="(item, index) in series"
+        <Card @addEntry="addEntry" @removeEntry="removeEntry" v-for="(item, index) in series"
+            :watchLater="watchLater"
             :key="item.id"
             :series="series"
             :index="index"
@@ -48,6 +51,16 @@ export default {
   props: {
     movies: Array,
     series: Array,
+    watchLater: Array,
+  },
+  methods: {
+    addEntry(showName) {
+      this.$emit('addEntry', showName)
+    },
+
+    removeEntry(showName) {
+      this.$emit('removeEntry', showName)
+    },
   }
 }
 </script>
@@ -63,6 +76,12 @@ export default {
       h2 {
           font-weight: 800;
           margin-bottom: 15px;
+          margin-right: 10px;
+          display: inline-block;
+      }
+
+      span {
+        color: #777;
       }
 
       .series-title {
@@ -87,20 +106,14 @@ export default {
           margin-bottom: 40px;
         }
       }
-
+ 
       ::-webkit-scrollbar {
-        height: 7px;
-      }
-
-      ::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 5px $main-bg; 
-        border-radius: 10px;
+          height: 7px;
       }
 
       ::-webkit-scrollbar-thumb {
-        background: red; 
-        border-radius: 10px;
+          background: red; 
+          border-radius: 10px;
       }
-
     }
 </style>

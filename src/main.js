@@ -8,12 +8,17 @@ import { faBell } from '@fortawesome/free-solid-svg-icons'
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faSearch)
 library.add(faBell)
 library.add(faCaretDown)
 library.add(farStar, fasStar)
+library.add(farHeart, fasHeart)
+library.add(faTimes)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

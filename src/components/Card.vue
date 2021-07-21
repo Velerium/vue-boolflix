@@ -9,21 +9,26 @@
       <div class="or-title">{{ showTrueName }}</div>
 
       <div class="subtitle lang"> Lingua Originale:      
-        <img v-if="this.flagExists" class="or-lang" :src="getFlagUrl(language)">
+        <img v-if="flagExists" class="or-lang" :src="getFlagUrl(language)">
         <div v-else class="or-lang"> {{ language }} </div>
       </div>
 
       <div class="subtitle">Rating:</div>
       <div class="all-stars">
 
-        <div v-if="this.flagNoVotes">No votes yet...</div>
+        <div v-if="flagNoVotes">No votes yet...</div>
         <font-awesome-icon v-else v-for="stars in 5" :key=stars class="far fa-star" :icon="['far', 'star']" />
 
-        <div v-if="!this.flagNoVotes">{{ rating }}</div>
+        <div v-if="!flagNoVotes">{{ rating }}</div>
         <div class="star-rating">
           {{ getStars() }}
           <font-awesome-icon v-for="stars in trueStars" :key=stars class="fas fa-star" :icon="['fas', 'star']" />
         </div>
+      </div>
+
+      <div class="watch-later">
+        <font-awesome-icon v-if="!watchLater.includes(showName)" class="far fa-heart" @click="$emit('addEntry', showName)" :icon="['far', 'heart']" />
+        <font-awesome-icon v-else class="fas fa-heart" @click="$emit('removeEntry', showName)" :icon="['fas', 'heart']" />
       </div>
 
     </div>
@@ -45,6 +50,7 @@ export default {
   props: {
     movies: Array,
     series: Array,
+    watchLater: Array,
     index: Number,
     showName: String,
     showTrueName: String,
@@ -74,8 +80,7 @@ export default {
     },
 
     getStars() {
-      this.flagNoVotes = false;
-
+      
       if(Math.round(this.rating/2 === 0)) {
         this.flagNoVotes = true;
         return;
@@ -153,6 +158,12 @@ export default {
               transform: translate(-50%, 0%);
             }
             
+            .fa-heart {
+              position: absolute;
+              bottom: 10px;
+              right: 10px;
+              font-size: 18px;
+            }
         }
 
         &:hover .series-info {
