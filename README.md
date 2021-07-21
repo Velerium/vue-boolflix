@@ -1,24 +1,6 @@
 # vue-boolflix
 
-## Project setup
-```
-npm install
-```
+Watch later list:
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Jump to favorited shows in a click or remove stuff you already watched, by either clicking the heart icon again or the X inside the list itself!
+Use the bell icon to access it.
